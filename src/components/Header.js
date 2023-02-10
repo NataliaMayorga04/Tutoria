@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
@@ -6,21 +6,28 @@ import { useNavigate } from 'react-router-dom'
 function Header() {
 
   const navigate= new useNavigate();
-
+  const [isOpen,setIsOpen] = useState(false); 
   const goToMain = () => {
     navigate(`/`)
   }
+
 
   return (
     <Nav>
         <Left>
             <Logo src ='images/logo.png' onClick={goToMain}/>
         </Left>
-
+        
         <MenuNav>
           <MenuLink to={`/`}><span>Inicio</span></MenuLink>
           <MenuLink to={`/info`}><span>Info</span></MenuLink>
+          <MenuLink to={`/prueba`}><span>Prueba</span></MenuLink>
         </MenuNav>
+        <Hamburguer onClick={() => setIsOpen(!isOpen)}> 
+          <span/>
+          <span/>
+          <span/>
+        </Hamburguer>
         
     </Nav>
   )
@@ -29,9 +36,8 @@ function Header() {
 export default Header
 
 const Nav = styled.div`
-padding: 0 6vh 0 2vh;
+padding: 0 6vh 0 2vw;
 background-color: blanchedalmond;
-display: flex;
 min-height: 12vh;
 align-items: center;
 justify-content: space-between;
@@ -49,20 +55,28 @@ width: 40%;
 
 const Logo = styled.img`
 cursor: pointer;
-width: 30%;
-@media (max-width: 740px){
-    width: 60%;
-}
+  width: 30%;
+  @media (max-width: 740px){
+      width: 60%;
+  }
 `
 
 const MenuNav =styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  @media (max-width: 740px) {
+    overflow: hidden;
+    flex-direction: column;
+    max-height: ${({ isOpen }) => (isOpen ? "300px" : "0")};
+    transition: max-height 0.3s ease-in;
+    width: 100%;
+  }
 
 `
 const MenuLink=styled(Link)`
-  padding: 1em 2em;
+  padding: 1rem 2rem;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
@@ -74,7 +88,7 @@ const MenuLink=styled(Link)`
         position: relative; 
         &:after{
             content:"";
-            height: 4px;
+            height: 2px;
             background: black;
             position: absolute;
             left: 0;
@@ -95,3 +109,18 @@ const MenuLink=styled(Link)`
 
 `
 
+const Hamburguer=styled.div`
+display: none;
+flex-direction: column;
+cursor: pointer;
+span{
+  height: 2px;
+  width: 25px;
+  background: black;
+  margin-bottom: 4px;
+  border-radius: 5px;
+}
+@media (max-width: 740px){
+  display: flex;
+}
+`
