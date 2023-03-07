@@ -17,17 +17,17 @@ function Header() {
         <Left>
             <Logo src ='images/logo.png' onClick={goToMain}/>
         </Left>
-        
-        <MenuNav>
+        <Hamburger onClick={() => setIsOpen(!isOpen)}> 
+          <span/>
+          <span/>
+          <span/>
+        </Hamburger>
+        <NavMenu isOpen={isOpen}>
           <MenuLink to={`/`}><span>Inicio</span></MenuLink>
           <MenuLink to={`/info`}><span>Info</span></MenuLink>
           <MenuLink to={`/prueba`}><span>Prueba</span></MenuLink>
-        </MenuNav>
-        <Hamburguer onClick={() => setIsOpen(!isOpen)}> 
-          <span/>
-          <span/>
-          <span/>
-        </Hamburguer>
+        </NavMenu>
+        
         
     </Nav>
   )
@@ -36,55 +36,79 @@ function Header() {
 export default Header
 
 const Nav = styled.div`
-padding: 0 6vh 0 2vw;
-background-color: blanchedalmond;
-min-height: 12vh;
-align-items: center;
-justify-content: space-between;
-position: relative;
-top: 0;
-left: 0;
-right: 0;
+  padding: 0 6vh 0 2vw; 
+  display: flex;
+  min-height: 12vh;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  background: pink;
+  flex-wrap: wrap;
+  position: relative;
+  color: black;
+  top: 0;
+  left: 0;
+  right: 0;
 `
+
 const Left = styled.div`
-display: flex;
-align-items: center;
-padding: 1em;
-width: 40%;
+    display: flex;
+    padding: 1em;
+    align-items: center;
+    width: 30%;
 `
 
 const Logo = styled.img`
-cursor: pointer;
-  width: 30%;
-  @media (max-width: 740px){
-      width: 60%;
-  }
+
+    cursor: pointer;
+    width: 50%;
+    @media (max-width: 800px) {
+        width: 100%;
+        height: 100%;
+    }
 `
 
-const MenuNav =styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  @media (max-width: 740px) {
-    overflow: hidden;
-    flex-direction: column;
-    max-height: ${({ isOpen }) => (isOpen ? "300px" : "0")};
-    transition: max-height 0.3s ease-in;
-    width: 100%;
-  }
-
+const NavMenu = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    color: black;
+    @media (max-width: 800px) {
+        overflow: hidden;
+        flex-direction: column;
+        max-height: ${({ isOpen }) => (isOpen ? "200px" : "0")};
+        transition: max-height 0.3s ease-in;
+        width: 100%;
+    }
 `
-const MenuLink=styled(Link)`
-  padding: 1rem 2rem;
+
+const Hamburger = styled.div`
+  display: none;
+  flex-direction: column;
   cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  font-size: 1.4em;
-  font-weight: bold;
-  color: black;
+  span {
+    height: 2px;
+    width: 25px;
+    background: black;
+    margin-bottom: 4px;
+    border-radius: 5px;
+  }
+  @media (max-width: 800px) {
+    display: flex;
+  }
+`
 
-  span{
+const MenuLink = styled(Link)`
+    padding: 1rem 2rem;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease-in;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: black;
+    span{
         position: relative; 
         &:after{
             content:"";
@@ -106,21 +130,4 @@ const MenuLink=styled(Link)`
             opacity: 1;
         }
   }
-
-`
-
-const Hamburguer=styled.div`
-display: none;
-flex-direction: column;
-cursor: pointer;
-span{
-  height: 2px;
-  width: 25px;
-  background: black;
-  margin-bottom: 4px;
-  border-radius: 5px;
-}
-@media (max-width: 740px){
-  display: flex;
-}
-`
+  `
